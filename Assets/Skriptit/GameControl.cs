@@ -10,10 +10,11 @@ public class GameControl : MonoBehaviour {
 
     public static GameControl control;
 
+    public bool load = false;
 
     // asioita joita tulee saveen
     public float health, experience;
-    private Vector3 charpos;
+    public Vector3 charpos;
     private string scene;
 
     // asettaa xyz floatiksi
@@ -22,7 +23,7 @@ public class GameControl : MonoBehaviour {
     public float charposz { get { return charpos.z; } set { charpos.z = value; } }
 
 
-    void Update () {
+    void Awake () {
         // gamecontrol luodaan jos sitä ei ole olemassa
 	    if(control == null)
         {
@@ -94,25 +95,28 @@ public class GameControl : MonoBehaviour {
             file.Close();
 
             // asettaa tiedoston tiedot nykyisiksi
-            SceneManager.LoadScene(data.scene);
             health = data.health;
             experience = data.experience;
 
-            charpos.x = data.charposx;
-            charpos.y = data.charposy;
-            charpos.z = data.charposz;
+            charposx = data.charposx;
+            charposy = data.charposy;
+            charposz = data.charposz;
 
-            // todo, ottaa pelaajan, liikuttaa pelaajan charpos positioniin
+            Vector3 charpos = new Vector3(charposx, charposy, charposz);
             transform.position = charpos;
+            Debug.Log(charposx + " " + charposy + " " + charposz);
+            // todo, ottaa pelaajan, liikuttaa pelaajan charpos positioniin
+            load = true;
+            SceneManager.LoadScene(data.scene);
+
+
+
+            // todo tuhota olemassa olevat GameControllit
+            //
+
+            Cursor.visible = false;
             Time.timeScale = 1;
-
-            if(control){
-                Destroy(gameObject);
-            }
-           
-            
-
-
+                   
         }
 
 

@@ -13,7 +13,18 @@ public class playerMove : MonoBehaviour {
     public float jumpForce = 10.0f;
     public float gravity = 20.0f;
 
-    public GameObject pausedmenu;
+    public GameObject pausedmenu, spawnpoint;
+
+    void Load()
+    {
+        if(GameControl.control.load == true)
+        {
+
+            transform.position = GameControl.control.charpos;
+            GameControl.control.load = false;
+
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -28,13 +39,10 @@ public class playerMove : MonoBehaviour {
         if (Input.GetButtonDown("Escape"))
         {
 
-
             Cursor.visible = true;
             pausedmenu.SetActive(true);
             Time.timeScale = 0;
-
-
-            
+           
         }
 
 
